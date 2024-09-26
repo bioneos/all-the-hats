@@ -43,6 +43,18 @@ body {
   cursor: pointer;
 }
 
+.start-btn {
+  background-color: #4CAF50; 
+  color: white; 
+  padding: 15px 32px; 
+  font-size: 16px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s, box-shadow 0.3s; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+}
+
 .btn:focus {
   outline:0;
 }
