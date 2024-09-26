@@ -9,17 +9,30 @@
   <div id="container" style="text-align: center; margin-top: 40px;">
     <h1>STEAM Institute <a href="#" id="easter-egg" 
         onClick="alert('Hello from Bio::Neos!');"
-        style="text-decoration: none; color: black; cursor: auto;" >2023</a></h1>
-    <button id="reset" onClick="demoController.reset();">Reset</button>
-    <div class="click-count">
-      <p><b><span id="remaining-count">5</span></b>clicks remaining!</p>
-    </div>
+        style="text-decoration: none; color: black; cursor: auto;" >2024</a></h1>
+        <button id="start" class="start-btn" onClick="demoController.startGame();">Start Game</button>
+        <div class="status-bar">
+          <div class="click-count">
+            <p><b><span id="remaining-count">5</span></b> clicks remaining!</p>
+            <p><span id="timer">0.000 seconds</span></p>
+
+          </div>
+          <div class="timer">
+          </div>
+          
+        </div>
+
     <button class="ui red btn"></button>
     <button class="ui yellow btn"></button><br>
     <button class="ui green btn"></button>
     <button class="ui blue btn"></button>
     <p style="font-size: 4em;">Try to guess the secret sequence of buttons</p>
+    
     <div id="success-text-container" class="hidden"><h3 id="success-text">Winner!</h3></div>
+    <div class="leaderboard"></div>
+      <strong>Leaderboard</strong>
+      <div id="leaderboard-content"></div>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

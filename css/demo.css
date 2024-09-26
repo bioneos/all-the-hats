@@ -1,19 +1,36 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
-
 body {
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 900px; 
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .click-count {
   font-size: 16pt;
-  margin: 0 2em;
+  margin: 0 1em;
   text-align: left;
 }
 
-.click-count .timer {
-  font-family: monospace;
-  float: right;
+.timer {
+  font-size: 16pt;
+  text-align: right;
+  flex-grow: 1; /* Gives the timer more room if needed */
+}
+
+.leaderboard, #leaderboard-content {
+  font-size: 16pt;
+  margin: 0 1em;
+  text-align: center;
+  flex-grow: 1;
 }
 
 .btn {
@@ -45,46 +62,19 @@ body {
 }
 
 .blue.btn {
-  background-color: #0000ff
+  background-color: #0000ff;
 }
 .blue:active {
   background-color: #1678c2;
 }
+
 .green.btn {
   background-color: #21ee45;
 }
 .green:active {
   background-color: #16ab39;
 }
-.pink.btn {
-  background-color: #ffaaaa;
-}
-.pink:active {
-  background-color: #dddddd;
-}
-.orange.btn {
-  background-color: #ffa500;
-}
-.orange:active {
-  background-color: #dddddd;
-}
-.white.btn {
-  background-color: #ffffff;
-}
-.white:active {
-  background-color: #dddddd;
-}
-
-#remaining-count {
-  padding-right: 7px;
-}
 
 .hidden {
   display: none;
-}
-
-#egg, #try-again
-{
-  display: none;
-  font-size: 3em;
 }
