@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+
+body {
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif
+}
+
+.click-count {
+  font-size: 16pt;
+  margin: 0 2em;
+  text-align: left;
+}
+
+.click-count .timer {
+  font-family: monospace;
+  float: right;
+}
+
+.btn {
+  width: 100px;
+  margin: 20px;
+  height: 150px;
+  padding: 0 .25em 0 0;
+  border: none;
+  border-radius: 0.287rem;
+  cursor: pointer;
+}
+
+.btn:focus {
+  outline:0;
+}
+
+.red.btn {
+  background-color: #ff0000;
+}
+.red:active {
+  background-color: #d01919;
+}
+
+.yellow.btn {
+  background-color: #fbbd08;
+}
+.yellow:active {
+  background-color: #eaae00;
+}
+
+.blue.btn {
+  background-color: #0000ff
+}
+.blue:active {
+  background-color: #1678c2;
+}
+.green.btn {
+  background-color: #21ee45;
+}
+.green:active {
+  background-color: #16ab39;
+}
+.pink.btn {
+  background-color: #ffaaaa;
+}
+.pink:active {
+  background-color: #dddddd;
+}
+.orange.btn {
+  background-color: #ffa500;
+}
+.orange:active {
+  background-color: #dddddd;
+}
+.white.btn {
+  background-color: #ffffff;
+}
+.white:active {
+  background-color: #dddddd;
+}
+
+#remaining-count {
+  padding-right: 7px;
+}
+
+.hidden {
+  display: none;
+}
+
+#egg, #try-again
+{
+  display: none;
+  font-size: 3em;
+}

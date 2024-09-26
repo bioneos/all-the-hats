@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <link rel="stylesheet" href="css/demo.css?v=2">
+   <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+   <title>Johnson County STEAM Institute</title>
+</head>
+<body>
+  <div id="container" style="text-align: center; margin-top: 40px;">
+    <h1>STEAM Institute <a href="#" id="easter-egg" 
+        onClick="alert('Hello from Bio::Neos!');"
+        style="text-decoration: none; color: black; cursor: auto;" >2023</a></h1>
+    <button id="reset" onClick="demoController.reset();">Reset</button>
+    <div class="click-count">
+      <p><b><span id="remaining-count">5</span></b>clicks remaining!</p>
+    </div>
+    <button class="ui red btn"></button>
+    <button class="ui yellow btn"></button><br>
+    <button class="ui green btn"></button>
+    <button class="ui blue btn"></button>
+    <p style="font-size: 4em;">Try to guess the secret sequence of buttons</p>
+    <div id="success-text-container" class="hidden"><h3 id="success-text">Winner!</h3></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="js/demo.js?v=3"></script>
+  <script>
+    var demoController = new DemoController("blue green blue yellow red");
+    document.onreadystatechange = function () {
+      if (document.readyState == "complete") {
+        // document is ready. Do your stuff here
+        demoController.init();
+      }
+    }
+  </script>
+</body>
+</html>
