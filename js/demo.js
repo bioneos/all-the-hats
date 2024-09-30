@@ -85,17 +85,16 @@ var DemoController = function (sequenceStr) {
         won = true; // Mark the game as won
         clearInterval(timerInterval); // Stop the timer
         var endTime = Date.now();
-        var timeTaken = ((endTime - startTime) / 1000).toFixed(3);
-        var adjustedTime = (parseFloat(timeTaken) - 0.004).toFixed(3); // Subtract 0.003 seconds
-        updateLeaderboard(adjustedTime);
+        var timeTaken = ((endTime - startTime) / 1000).toFixed(3); // Calculate the time taken
+        document.getElementById('timer').innerHTML = timeTaken + ' seconds'; // Update the timer display with the exact time
+        updateLeaderboard(timeTaken); // Use the exact time for the leaderboard
         showMessage('Congratulations!');
         changeBackground('#6435c9');
         changeTextColor('white', '#fbbd08');
-
+    
         // Hide the error message
         document.getElementById('error-message').classList.add('hidden');
     }
-
     // Function to update the leaderboard
     function updateLeaderboard(timeTaken) {
         var playerName = document.getElementById('playerName').value; // Capture the player's name
