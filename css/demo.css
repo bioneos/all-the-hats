@@ -1,58 +1,94 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
 body {
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.status-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 900px; 
-    margin-top: 20px;
-    margin-bottom: 20px;
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.top-section {
+  text-align: center;
+  padding: 20px;
+}
+
+.middle-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .click-count {
   font-size: 16pt;
-  margin: 0 1em;
-  text-align: left;
 }
 
-.timer {
-  font-size: 16pt;
-  text-align: right;
-  flex-grow: 1; /* Gives the timer more room if needed */
+.ui-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 280px; /* Adjusted width to fit two buttons per row */
+  margin-left: 12rem;
 }
 
-.leaderboard, #leaderboard-content {
-  font-size: 16pt;
-  margin: 0 1em;
+.leaderboard {
+  font-size: 22px; /* Adjusted for better visibility */
+  display: table;
   text-align: center;
-  flex-grow: 1;
+  width: 20%; /* Ensure enough width */
+  min-width: 200px; /* Minimum width to handle longer names */
+}
+
+.leaderboard-content {
+  display: table-cell;
+  font-size: 16px; /* Slightly reduced font size */
+  white-space: nowrap;  /* Prevents text from wrapping */
+  overflow: hidden;     /* Hides text that exceeds the container width */
+  text-overflow: ellipsis; /* Shows an ellipsis for overflowed text */
+  padding: 5px; /* Add padding for spacing */
+}
+
+
+.comment-container {
+  text-align: center;
+  margin-top: auto;
 }
 
 .btn {
   width: 100px;
-  margin: 20px;
   height: 150px;
-  padding: 0 .25em 0 0;
+  margin: 10px;
   border: none;
   border-radius: 0.287rem;
   cursor: pointer;
 }
 
 .start-btn {
-  background-color: #4CAF50; 
-  color: white; 
-  padding: 15px 32px; 
-  font-size: 16px; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  transition: background-color 0.3s, box-shadow 0.3s; 
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-btn {
+  display: none;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:focus {
@@ -89,4 +125,24 @@ body {
 
 .hidden {
   display: none;
+}
+
+#error-message {
+  color: red;
+  font-size: 30px;
+}
+
+#success-text-container {
+  font-size: 28px;
+}
+
+.btn, .start-btn, .reset-btn {
+  font-size: 20px; 
+  padding: 15px 30px;
+}
+
+#playerName {
+  font-size: 20px; 
+  padding: 10px; 
+  width: 300px; 
 }

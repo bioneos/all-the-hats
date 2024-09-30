@@ -2,47 +2,54 @@
 <html>
 <head>
    <link rel="stylesheet" href="css/demo.css?v=2">
-   <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
    <title>Johnson County STEAM Institute</title>
 </head>
 <body>
-  <div id="container" style="text-align: center; margin-top: 40px;">
-    <h1>STEAM Institute <a href="#" id="easter-egg" 
-        onClick="alert('Hello from Bio::Neos!');"
-        style="text-decoration: none; color: black; cursor: auto;" >2024</a></h1>
-        <button id="start" class="start-btn" onClick="demoController.startGame();">Start Game</button>
-        <div class="status-bar">
-          <div class="click-count">
-            <p><b><span id="remaining-count">5</span></b> clicks remaining!</p>
-            <p><span id="timer">0.000 seconds</span></p>
+  <div id="container">
+    <!-- Top Section: Title, Button, and Name Prompt -->
+    <div class="top-section">
+      <h1>STEAM Institute <a href="#" id="easter-egg" 
+          onClick="alert('Hello from Bio::Neos!');"
+          style="text-decoration: none; color: black; cursor: auto;">2024</a></h1>
+      <input type="text" id="playerName" placeholder="Enter Your Name" maxlength="20">
+      <button id="start" class="start-btn" onClick="demoController.startGame();">Start Game</button>
+      <button id="reset-button" class="reset-btn">Reset Game</button>
+      <div id="name-error-message" style="color: red; " class="hidden"></div>
 
-          </div>
-          <div class="timer">
-          </div>
-          
-        </div>
+    </div>
 
-    <button class="ui red btn"></button>
-    <button class="ui yellow btn"></button><br>
-    <button class="ui green btn"></button>
-    <button class="ui blue btn"></button>
-    <p style="font-size: 4em;">Try to guess the secret sequence of buttons</p>
-    
-    <div id="success-text-container" class="hidden"><h3 id="success-text">Winner!</h3></div>
-    <div class="leaderboard"></div>
-      <strong>Leaderboard</strong>
-      <div id="leaderboard-content"></div>
+    <!-- Middle Section: Clicks, Buttons, Leaderboard -->
+    <div class="middle-section">
+      <div class="click-count">
+        <p><b><span id="remaining-count">5</span></b> clicks remaining!</p>
+        <p><span id="timer">0.000 seconds</span></p>
+      </div>
+      <div class="ui-buttons">
+        <button class="ui red btn"></button>
+        <button class="ui yellow btn"></button>
+        <button class="ui green btn"></button>
+        <button class="ui blue btn"></button>
+      </div>
+      <div class="leaderboard">
+        <strong>Leaderboard</strong>
+        <div id="leaderboard-content"></div>
+      </div>
+    </div>
+
+    <!-- Bottom Section: Text Messages -->
+    <div class="comment-container">
+      <div id="success-text-container" class="hidden"><h3 id="success-text">Winner!</h3></div>
+      <div id="error-message" class="hidden"></div>
+      <p style="font-size: 4em;">Try to guess the secret sequence of buttons</p>
     </div>
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
   <script src="js/demo.js?v=3"></script>
   <script>
     var demoController = new DemoController("blue green blue yellow red");
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
-        // document is ready. Do your stuff here
         demoController.init();
       }
     }
