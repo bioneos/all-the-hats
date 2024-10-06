@@ -9,14 +9,12 @@
   <div id="container">
     <!-- Top Section: Title, Button, and Name Prompt -->
     <div class="top-section">
-      <h1>STEAM Institute <a href="#" id="easter-egg" 
+      <h1><a href="#" id="easter-egg" 
           onClick="alert('Hello from Bio::Neos!');"
-          style="text-decoration: none; color: black; cursor: auto;">2024</a></h1>
-      <input type="text" id="playerName" placeholder="Enter Your Name" maxlength="20">
+          style="text-decoration: none; color: black; cursor: auto;">Hue's Clues</a></h1>
       <button id="start" class="start-btn" onClick="demoController.startGame();">Start Game</button>
-      <button id="reset-button" class="reset-btn">Reset Game</button>
-      <div id="name-error-message" style="color: red; " class="hidden"></div>
-
+      <button id="reset-button" class="reset-btn" style="display: none;">Reset Game</button>
+      <div id="name-error-message" style="color: red;" class="hidden"></div>
     </div>
 
     <!-- Middle Section: Clicks, Buttons, Leaderboard -->
@@ -44,6 +42,14 @@
       <p style="font-size: 4em;">Try to guess the secret sequence of buttons</p>
     </div>
   </div>
+
+  <!-- Dialog for top 10 -->
+  <dialog id="top10-dialog">
+    <p>Congratulations! You made it to the top 10!</p>
+    <input type="text" id="dialog-playerName" placeholder="Enter Your Name" maxlength="20">
+    <button id="submit-name">Submit</button>
+  </dialog>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/demo.js?v=3"></script>
   <script>
@@ -53,6 +59,17 @@
         demoController.init();
       }
     }
+
+    // Close dialog button event listener
+    document.getElementById('submit-name').addEventListener('click', function() {
+      var playerName = document.getElementById('dialog-playerName').value;
+      if (playerName) {
+        demoController.savePlayerName(playerName);
+        document.getElementById('top10-dialog').close();
+      } else {
+        alert("Please enter your name.");
+      }
+    });
   </script>
 </body>
 </html>

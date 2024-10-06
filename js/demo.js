@@ -7,6 +7,7 @@ var DemoController = function (sequenceStr) {
     var remainingClicks = sequence.length; // Track remaining clicks
     var won = false; // Track if the game is won
     var timerInterval; // Variable to hold the reference to setInterval
+    var timeTaken; // Variable to store the time taken
 
     // Disable all buttons initially
     buttons.forEach(button => button.disabled = true);
@@ -38,20 +39,6 @@ var DemoController = function (sequenceStr) {
 
     // Function to start the game
     function startGame() {
-        var playerName = document.getElementById('playerName').value; // Get player's name from the input field
-
-        if (!playerName) {
-            var nameErrorMessageDiv = document.getElementById('name-error-message');
-            nameErrorMessageDiv.innerHTML = "Please enter your name to start the game."; // Set the error message
-            nameErrorMessageDiv.classList.remove('hidden'); // Show the error message
-            return;
-        }
-
-        console.log("Game started by:", playerName); // Log the player's name to the console
-
-        // Hide the name error message if the game starts successfully
-        document.getElementById('name-error-message').classList.add('hidden');
-
         // Reset game state
         if (timerInterval) {
             clearInterval(timerInterval); // Clear existing timer interval
@@ -85,7 +72,7 @@ var DemoController = function (sequenceStr) {
         won = true; // Mark the game as won
         clearInterval(timerInterval); // Stop the timer
         var endTime = Date.now();
-        var timeTaken = ((endTime - startTime) / 1000).toFixed(3); // Calculate the time taken
+        timeTaken = ((endTime - startTime) / 1000).toFixed(3); // Calculate the time taken
         document.getElementById('timer').innerHTML = timeTaken + ' seconds'; // Update the timer display with the exact time
         updateLeaderboard(timeTaken); // Use the exact time for the leaderboard
         showMessage('Congratulations!');
@@ -95,13 +82,31 @@ var DemoController = function (sequenceStr) {
         // Hide the error message
         document.getElementById('error-message').classList.add('hidden');
     }
+
     // Function to update the leaderboard
     function updateLeaderboard(timeTaken) {
-        var playerName = document.getElementById('playerName').value; // Capture the player's name
         var leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
-        leaderboard.push({ name: playerName, time: timeTaken });
+        leaderboard.push({ name: "", time: timeTaken }); // Temporarily add an empty name
         leaderboard.sort(function (a, b) { return a.time - b.time; }); // Sort by time
         leaderboard = leaderboard.slice(0, 10); // Keep only the top 10 entries
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+        displayLeaderboard();
+    
+        // Check if the player's time is in the top 10
+        var isTop10 = leaderboard.some(entry => entry.time === timeTaken);
+        if (isTop10) {
+            document.getElementById('top10-dialog').showModal(); // Show the dialog
+        }
+    }
+    
+    function savePlayerName(playerName) {
+        var leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        for (var i = 0; i < leaderboard.length; i++) {
+            if (leaderboard[i].name === "" && leaderboard[i].time === timeTaken) {
+                leaderboard[i].name = playerName; // Update the name
+                break;
+            }
+        }
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
         displayLeaderboard();
     }
@@ -112,8 +117,14 @@ var DemoController = function (sequenceStr) {
         var leaderboardHTML = leaderboard.map(function (entry, index) {
             var formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
             return (index + 1) + '. ' + entry.name + ' - ' + formattedTime + 's'; // Display both name and time
-        }).join('<br>');
-        document.getElementById('leaderboard-content').innerHTML = leaderboardHTML;
+        });
+    
+        // Fill remaining spots with "N/A"
+        for (var i = leaderboard.length; i < 10; i++) {
+            leaderboardHTML.push((i + 1) + '. N/A - N/A');
+        }
+    
+        document.getElementById('leaderboard-content').innerHTML = leaderboardHTML.join('<br>');
     }
 
     // Function to show a success message
@@ -145,7 +156,6 @@ var DemoController = function (sequenceStr) {
         document.getElementById('remaining-count').innerHTML = remainingClicks;
     }
 
-    // Function to handle button clicks
     function buttonEventHandler() {
         if (!startTime) { // Check if the timer needs to start
             startTime = Date.now(); // Ensure start time is set on first click
@@ -157,25 +167,28 @@ var DemoController = function (sequenceStr) {
         if (this.classList.contains(sequence[seqIndex])) {
             seqIndex++;
             remainingClicks--;
+    
+            // Hide the error message when the correct button is pressed
+            document.getElementById('error-message').classList.add('hidden');
         } else {
             seqIndex = 0;
-
+    
             // Stop the timer
             clearInterval(timer);
-
+    
             // Reset the game state
             remainingClicks = sequence.length;
             gameReset = true; // Set gameReset to true
-
+    
             // Select the div element
             var errorMessageDiv = document.getElementById('error-message');
-
+    
             // Construct the message
             var message = 'Wrong, Try again! (Hint: start with ' + sequence[0] + ', end with ' + sequence.slice(-1) + ')';
-
+    
             // Update the innerHTML of the div
             errorMessageDiv.innerHTML = message;
-
+    
             // Remove the 'hidden' class to make the div visible
             errorMessageDiv.classList.remove('hidden');
         }
@@ -203,8 +216,10 @@ var DemoController = function (sequenceStr) {
             resetButton.addEventListener('click', resetGame); // Set the event listener for the reset button
             startButton.style.display = 'inline-block'; // Show the start button initially
             resetButton.style.display = 'none'; // Hide the reset button initially
+            displayLeaderboard(); // Display the leaderboard when the page loads
             updatePage();
         },
         startGame: startGame,
+        savePlayerName: savePlayerName // Expose savePlayerName function
     }
 }
