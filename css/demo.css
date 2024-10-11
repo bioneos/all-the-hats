@@ -48,12 +48,28 @@ body {
 }
 
 .leaderboard {
-  font-size: 22px; /* Adjusted for better visibility */
-  display: table;
-  text-align: center;
-  width: 20%; /* Ensure enough width */
-  min-width: 200px; /* Minimum width to handle longer names */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This centers the child elements (title and table) */
+  width: 100%; /* Adjust width as needed */
+  font-size: 22px;
+  padding: 10px;
 }
+
+#leaderboard-table {
+  width: auto; /* Adjust this so the table size matches the leaderboard title */
+  max-width: 60%; /* Prevent the table from becoming too wide */
+  margin-top: 20px; /* Space between the title and the table */
+  border-collapse: collapse;
+}
+
+#leaderboard-table th, #leaderboard-table td {
+  text-align: center; /* Center text in table cells */
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+
 
 .leaderboard-content {
   display: table-cell;

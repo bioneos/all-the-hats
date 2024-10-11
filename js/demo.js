@@ -116,17 +116,18 @@ const DemoController = function (sequenceStr) {
     function displayLeaderboard() {
         let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
         let leaderboardHTML = leaderboard.map(function (entry, index) {
-            let formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
-            return (index + 1) + '. ' + entry.name + ' - ' + formattedTime + 's'; // Display both name and time
+          let formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
+          return `<tr><td>${index + 1}</td><td>${entry.name || 'N/A'}</td><td>${formattedTime}s</td></tr>`; // Display both name and time
         });
-    
+      
         // Fill remaining spots with "N/A"
         for (let i = leaderboard.length; i < 10; i++) {
-            leaderboardHTML.push((i + 1) + '. N/A - N/A');
+          leaderboardHTML.push(`<tr><td>${i + 1}</td><td>N/A</td><td>N/A</td></tr>`);
         }
-    
-        document.getElementById('leaderboard-content').innerHTML = leaderboardHTML.join('<br>');
-    }
+      
+        document.getElementById('leaderboard-content').innerHTML = leaderboardHTML.join('');
+      }
+      
 
     // Function to show a success message
     function showMessage(successMessage) {
