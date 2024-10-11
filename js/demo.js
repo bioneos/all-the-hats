@@ -1,15 +1,15 @@
-var DemoController = function (sequenceStr) {
-    var gameReset = false; // Track if the game has been reset
-    var buttons = document.querySelectorAll('.btn'); // Get all buttons
-    var startTime; // Will be set when the game starts
-    var seqIndex = 0; // Track the current sequence index
-    var sequence = sequenceStr.toLowerCase().split(' '); // Convert sequence to lowercase and split into an array
-    var remainingClicks = sequence.length; // Track remaining clicks
-    var won = false; // Track if the game is won
-    var timerInterval; // Variable to hold the reference to setInterval
-    var timeTaken; // Variable to store the time taken
+const DemoController = function (sequenceStr) {
+    let gameReset = false; // Track if the game has been reset
+    let startTime; // Will be set when the game starts
+    let seqIndex = 0; // Track the current sequence index
+    let sequence = sequenceStr.toLowerCase().split(' '); // Convert sequence to lowercase and split into an array
+    let remainingClicks = sequence.length; // Track remaining clicks
+    let won = false; // Track if the game is won
+    let timerInterval; // Variable to hold the reference to setInterval
+    let timeTaken; // Variable to store the time taken
 
     // Disable all buttons initially
+    let buttons = document.querySelectorAll('.btn'); // Get all buttons
     buttons.forEach(button => button.disabled = true);
 
     // Function to run the timer
@@ -23,8 +23,8 @@ var DemoController = function (sequenceStr) {
 
         // Update the timer display every millisecond
         timerInterval = setInterval(function() {
-            var elapsedTime = Date.now() - startTime; // Calculate elapsed time
-            var time = (elapsedTime / 1000).toFixed(3); // Convert to seconds and format
+            let elapsedTime = Date.now() - startTime; // Calculate elapsed time
+            let time = (elapsedTime / 1000).toFixed(3); // Convert to seconds and format
             document.getElementById('timer').innerHTML = time + ' seconds'; // Update the timer display
         }, 1);
 
@@ -61,8 +61,8 @@ var DemoController = function (sequenceStr) {
 
         updatePage(); // Update page elements as needed
 
-        var startButton = document.getElementById('start'); // Get the start button
-        var resetButton = document.getElementById('reset-button'); // Get the reset button
+        let startButton = document.getElementById('start'); // Get the start button
+        let resetButton = document.getElementById('reset-button'); // Get the reset button
         startButton.style.display = 'none'; // Hide the start button
         resetButton.style.display = 'inline-block'; // Show the reset button
     }
@@ -71,13 +71,14 @@ var DemoController = function (sequenceStr) {
     function successFunction() {
         won = true; // Mark the game as won
         clearInterval(timerInterval); // Stop the timer
-        var endTime = Date.now();
+        let endTime = Date.now();
         timeTaken = ((endTime - startTime) / 1000).toFixed(3); // Calculate the time taken
         document.getElementById('timer').innerHTML = timeTaken + ' seconds'; // Update the timer display with the exact time
         updateLeaderboard(timeTaken); // Use the exact time for the leaderboard
         showMessage('Congratulations!');
         changeBackground('#6435c9');
         changeTextColor('white', '#fbbd08');
+        buttons.forEach(button => button.disabled = true); // Disable all buttons
     
         // Hide the error message
         document.getElementById('error-message').classList.add('hidden');
@@ -85,7 +86,7 @@ var DemoController = function (sequenceStr) {
 
     // Function to update the leaderboard
     function updateLeaderboard(timeTaken) {
-        var leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
         leaderboard.push({ name: "", time: timeTaken }); // Temporarily add an empty name
         leaderboard.sort(function (a, b) { return a.time - b.time; }); // Sort by time
         leaderboard = leaderboard.slice(0, 10); // Keep only the top 10 entries
@@ -93,15 +94,15 @@ var DemoController = function (sequenceStr) {
         displayLeaderboard();
     
         // Check if the player's time is in the top 10
-        var isTop10 = leaderboard.some(entry => entry.time === timeTaken);
+        let isTop10 = leaderboard.some(entry => entry.time === timeTaken);
         if (isTop10) {
             document.getElementById('top10-dialog').showModal(); // Show the dialog
         }
     }
     
     function savePlayerName(playerName) {
-        var leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
-        for (var i = 0; i < leaderboard.length; i++) {
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        for (let i = 0; i < leaderboard.length; i++) {
             if (leaderboard[i].name === "" && leaderboard[i].time === timeTaken) {
                 leaderboard[i].name = playerName; // Update the name
                 break;
@@ -113,14 +114,14 @@ var DemoController = function (sequenceStr) {
 
     // Function to display the leaderboard
     function displayLeaderboard() {
-        var leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
-        var leaderboardHTML = leaderboard.map(function (entry, index) {
-            var formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
+        let leaderboardHTML = leaderboard.map(function (entry, index) {
+            let formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
             return (index + 1) + '. ' + entry.name + ' - ' + formattedTime + 's'; // Display both name and time
         });
     
         // Fill remaining spots with "N/A"
-        for (var i = leaderboard.length; i < 10; i++) {
+        for (let i = leaderboard.length; i < 10; i++) {
             leaderboardHTML.push((i + 1) + '. N/A - N/A');
         }
     
@@ -173,18 +174,19 @@ var DemoController = function (sequenceStr) {
         } else {
             seqIndex = 0;
     
-            // Stop the timer
-            clearInterval(timer);
-    
-            // Reset the game state
+            // Reset the game state (so they can keep trying)
             remainingClicks = sequence.length;
             gameReset = true; // Set gameReset to true
     
             // Select the div element
-            var errorMessageDiv = document.getElementById('error-message');
+            let errorMessageDiv = document.getElementById('error-message');
     
             // Construct the message
-            var message = 'Wrong, Try again! (Hint: start with ' + sequence[0] + ', end with ' + sequence.slice(-1) + ')';
+            let message = '<div>Wrong color, Keep trying!</div>'
+            message += '<div id="hint">(Hint: start with ' + sequence[0] + ', end with ' + sequence.slice(-1) + ')</div>';
+            setTimeout(() => {
+                document.getElementById('hint').classList.add('hidden');
+            }, 2000);
     
             // Update the innerHTML of the div
             errorMessageDiv.innerHTML = message;
@@ -199,8 +201,8 @@ var DemoController = function (sequenceStr) {
     function resetGame() {
         location.reload(); // Reload the page
 
-        var startButton = document.getElementById('start'); // Get the start button
-        var resetButton = document.getElementById('reset-button'); // Get the reset button
+        let startButton = document.getElementById('start'); // Get the start button
+        let resetButton = document.getElementById('reset-button'); // Get the reset button
         startButton.style.display = 'inline-block'; // Show the start button
         resetButton.style.display = 'none'; // Hide the reset button
     }
@@ -210,8 +212,8 @@ var DemoController = function (sequenceStr) {
             buttons.forEach(function(button) {
                 button.addEventListener('click', buttonEventHandler);
             });
-            var startButton = document.getElementById('start'); // Get the start button
-            var resetButton = document.getElementById('reset-button'); // Get the reset button
+            let startButton = document.getElementById('start'); // Get the start button
+            let resetButton = document.getElementById('reset-button'); // Get the reset button
             startButton.addEventListener('click', startGame); // Set the event listener for the start button
             resetButton.addEventListener('click', resetGame); // Set the event listener for the reset button
             startButton.style.display = 'inline-block'; // Show the start button initially
