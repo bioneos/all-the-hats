@@ -14,21 +14,29 @@ const DemoController = function (sequenceStr) {
 
     // Function to run the timer
     function runInterval(loopAfter) {
-        if (!startTime) return; // Ensure we have a start time set
-
-        // Clear any existing timer to prevent multiple intervals
+        if (!startTime) return;
+    
         if (timerInterval) {
             clearInterval(timerInterval);
         }
-
-        // Update the timer display every millisecond
+    
         timerInterval = setInterval(function() {
-            let elapsedTime = Date.now() - startTime; // Calculate elapsed time
-            let time = (elapsedTime / 1000).toFixed(3); // Convert to seconds and format
-            document.getElementById('timer').innerHTML = time + ' seconds'; // Update the timer display
+            let elapsedTime = Date.now() - startTime;
+            let time = (elapsedTime / 1000).toFixed(3);
+            document.getElementById('timer').innerHTML = time + ' seconds';
+    
+            // Check if the elapsed time has reached 60 seconds
+            if (elapsedTime >= 60000) { // 60000 milliseconds == 1 minute
+                clearInterval(timerInterval); // Stop the timer
+                won = true; // Set game as won to stop further interactions
+                document.getElementById('timer').innerHTML = 'Time is up!'; // Update the timer display
+                buttons.forEach(button => button.disabled = true); // Disable all buttons
+                document.getElementById('error-message').innerHTML = 'Time is up!'; // Update error message
+                document.getElementById('error-message').classList.remove('hidden'); // Show error message
+                document.getElementById('success-text-container').classList.add('hidden'); // Hide any success message
+            }
         }, 1);
-
-        // Reset the interval after a specified time
+    
         setTimeout(() => {
             if (!won && !gameReset) { // Only clear and reset interval if the game hasn't been won or reset
                 clearInterval(timerInterval);
@@ -36,6 +44,7 @@ const DemoController = function (sequenceStr) {
             }
         }, loopAfter);
     }
+    
 
     // Function to start the game
     function startGame() {
@@ -116,18 +125,18 @@ const DemoController = function (sequenceStr) {
     function displayLeaderboard() {
         let leaderboard = JSON.parse(localStorage.getItem('leaderboard')) || [];
         let leaderboardHTML = leaderboard.map(function (entry, index) {
-          let formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
-          return `<tr><td>${index + 1}</td><td>${entry.name || 'N/A'}</td><td>${formattedTime}s</td></tr>`; // Display both name and time
+            let formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
+            return `<tr><td>${index + 1}</td><td>${entry.name || 'N/A'}</td><td>${formattedTime}s</td></tr>`; // Display both name and time
         });
-      
+
         // Fill remaining spots with "N/A"
         for (let i = leaderboard.length; i < 10; i++) {
-          leaderboardHTML.push(`<tr><td>${i + 1}</td><td>N/A</td><td>N/A</td></tr>`);
+            leaderboardHTML.push(`<tr><td>${i + 1}</td><td>N/A</td><td>N/A</td></tr>`);
         }
-      
+
         document.getElementById('leaderboard-content').innerHTML = leaderboardHTML.join('');
-      }
-      
+    }
+
 
     // Function to show a success message
     function showMessage(successMessage) {
