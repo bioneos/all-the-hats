@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+:root {
+  --border-radius: 0.287rem;
+}
+
 body {
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
   margin: 0;
@@ -91,7 +95,7 @@ body {
   height: 150px;
   margin: 10px;
   border: none;
-  border-radius: 0.287rem;
+  border-radius: var(--border-radius);
   cursor: pointer;
 }
 

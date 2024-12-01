@@ -1,0 +1,54 @@
+.ui-buttons {
+    transform: rotate(45deg);
+
+    .btn {
+        --color: #aaa;
+
+        cursor: pointer;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-color: oklch(from var(--color) calc(l * 0.6) c h);
+        transition: 0.2s ease;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(--color);
+            box-shadow: 0 0 20px 10px oklch(from var(--color) calc(l * 0.9) c h);
+            border-radius: var(--border-radius);
+
+            opacity: 0;
+            transition: 0.1s ease;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &:active:not(:disabled) {
+            opacity: 1;
+
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+
+        .btn.red {
+            --color: oklch(66% 0.28 32);
+        }
+    
+        .btn.green {
+            --color: oklch(79% 0.3 146);
+        }
+    
+        .btn.blue {
+            --color: oklch(80% 0.2 218);
+        }
+    
+        .btn.yellow {
+            --color: oklch(90% 0.22 98);
+        }
+}
