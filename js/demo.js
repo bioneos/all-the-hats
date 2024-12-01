@@ -9,7 +9,7 @@ const DemoController = function (sequenceStr) {
     let timeTaken; // Variable to store the time taken
 
     const defaultLeaderboard = [
-        { name: 'Mike', time: '8.127' },
+        { name: 'Mike', time: '4.127' },
         { name: 'EpicNinja', time: '10.456' },
         { name: 'BlazeHunter', time: '14.239' },
         { name: 'FrostByte', time: '17.582' },
@@ -196,6 +196,7 @@ const DemoController = function (sequenceStr) {
         // is the sequence what I think it should be?
         console.log(sequence);
 
+        // check if the button is next in the sequence
         if (this.classList.contains(sequence[seqIndex])) {
             seqIndex++;
             remainingClicks--;
