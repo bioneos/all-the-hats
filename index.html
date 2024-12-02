@@ -58,7 +58,7 @@
 
   <script src="js/demo.js?v=3"></script>
   <script>
-    var demoController = new DemoController("blue green blue yellow red");
+    const demoController = new DemoController("blue green blue yellow red");
     document.onreadystatechange = function () {
       if (document.readyState == "complete") {
         demoController.init();
@@ -67,7 +67,7 @@
 
     // Close dialog button event listener
     document.getElementById('submit-name').addEventListener('click', function() {
-      var playerName = document.getElementById('dialog-playerName').value;
+      let playerName = document.getElementById('dialog-playerName').value;
       if (playerName) {
         demoController.savePlayerName(playerName);
         document.getElementById('top10-dialog').close();

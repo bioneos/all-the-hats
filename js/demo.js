@@ -91,12 +91,21 @@ const DemoController = function (sequenceStr) {
 
     // Function to handle game success
     function successFunction() {
-        won = true; // Mark the game as won
-        clearInterval(timerInterval); // Stop the timer
+        // Mark the game as won
+        won = true; 
+        // Stop the timer
+        clearInterval(timerInterval);
         let endTime = Date.now();
-        timeTaken = ((endTime - startTime) / 1000).toFixed(3); // Calculate the time taken
-        document.getElementById('timer').innerHTML = timeTaken + ' seconds'; // Update the timer display with the exact time
-        updateLeaderboard(timeTaken); // Use the exact time for the leaderboard
+        
+        // Calculate the time taken
+        timeTaken = ((endTime - startTime) / 1000).toFixed(3); 
+        
+        // Update the timer display with the exact time
+        document.getElementById('timer').innerHTML = timeTaken + ' seconds'; 
+        
+        // Use the exact time for the leaderboard
+        updateLeaderboard(timeTaken); 
+        
         showMessage('Congratulations!');
         changeBackground('#6435c9');
         changeTextColor('white', '#fbbd08');
@@ -117,9 +126,14 @@ const DemoController = function (sequenceStr) {
     // Function to update the leaderboard
     function updateLeaderboard(timeTaken) {
         let leaderboard = getLeaderboard();
-        leaderboard.push({ name: "_ _ _", time: timeTaken }); // Temporarily add an empty name
-        leaderboard.sort(function (a, b) { return a.time - b.time; }); // Sort by time
-        leaderboard = leaderboard.slice(0, 10); // Keep only the top 10 entries
+        // Temporarily add an empty name
+        leaderboard.push({ name: "_ _ _", time: timeTaken }); 
+        
+        // Sort by time
+        leaderboard.sort(function (a, b) { return a.time - b.time; }); 
+        
+        // Keep only the top 10 entries
+        leaderboard = leaderboard.slice(0, 10); 
         saveLeaderboard(leaderboard);
         displayLeaderboard();
 
@@ -134,7 +148,8 @@ const DemoController = function (sequenceStr) {
         let leaderboard = getLeaderboard();
         for (let i = 0; i < leaderboard.length; i++) {
             if (leaderboard[i].name === "_ _ _" && leaderboard[i].time === timeTaken) {
-                leaderboard[i].name = playerName; // Update the name
+                // Update the name
+                leaderboard[i].name = playerName; 
                 break;
             }
         }
@@ -146,8 +161,10 @@ const DemoController = function (sequenceStr) {
     function displayLeaderboard() {
         let leaderboard = getLeaderboard();
         let leaderboardHTML = leaderboard.map(function (entry, index) {
-            let formattedTime = parseFloat(entry.time).toFixed(3); // Ensure time is formatted to 3 decimal places
-            return `<tr><td>${index + 1}</td><td>${entry.name || 'N/A'}</td><td>${formattedTime}s</td></tr>`; // Display both name and time
+            // Ensure time is formatted to 3 decimal places
+            let formattedTime = parseFloat(entry.time).toFixed(3); 
+            // Display both name and time:
+            return `<tr><td>${index + 1}</td><td>${entry.name || 'N/A'}</td><td>${formattedTime}s</td></tr>`; 
         });
 
         document.getElementById('leaderboard-content').innerHTML = leaderboardHTML.join('');
@@ -184,9 +201,12 @@ const DemoController = function (sequenceStr) {
     }
 
     function buttonEventHandler() {
-        if (!startTime) { // Check if the timer needs to start
-            startTime = Date.now(); // Ensure start time is set on first click
-            timer = runInterval(5000); // Assign the interval to the timer variable
+        // Check if the timer needs to start
+        if (!startTime) { 
+            // Ensure start time is set on first click
+            startTime = Date.now(); 
+            // Assign the interval to the timer variable
+            timer = runInterval(5000); 
         }
         document.getElementById('success-text-container').classList.add('hidden');
         document.body.style['background-color'] = 'white';
@@ -231,12 +251,16 @@ const DemoController = function (sequenceStr) {
 
     // Function to reset the game
     function resetGame() {
-        location.reload(); // Reload the page
+        // Reload the page
+        location.reload(); 
 
-        let startButton = document.getElementById('start'); // Get the start button
-        let resetButton = document.getElementById('reset-button'); // Get the reset button
-        startButton.style.display = 'inline-block'; // Show the start button
-        resetButton.style.display = 'none'; // Hide the reset button
+        // Get the start / reset buttons
+        let startButton = document.getElementById('start'); 
+        let resetButton = document.getElementById('reset-button');
+
+        // Show the start button / Hide reset
+        startButton.style.display = 'inline-block';
+        resetButton.style.display = 'none'; 
     }
 
     function resetLeaderboardListener(event) {
@@ -256,19 +280,28 @@ const DemoController = function (sequenceStr) {
             buttons.forEach(function (button) {
                 button.addEventListener('click', buttonEventHandler);
             });
-            let startButton = document.getElementById('start'); // Get the start button
-            let resetButton = document.getElementById('reset-button'); // Get the reset button
-            startButton.addEventListener('click', startGame); // Set the event listener for the start button
-            resetButton.addEventListener('click', resetGame); // Set the event listener for the reset button
-            startButton.style.display = 'inline-block'; // Show the start button initially
-            resetButton.style.display = 'none'; // Hide the reset button initially
+            
+            // Get the start / reset buttons
+            let startButton = document.getElementById('start');
+            let resetButton = document.getElementById('reset-button');
+
+            // Setup event listeners
+            startButton.addEventListener('click', startGame);
+            resetButton.addEventListener('click', resetGame);
+
+            // Show the start button initially, hide the reset button
+            startButton.style.display = 'inline-block'; 
+            resetButton.style.display = 'none';
 
             document.addEventListener('keydown', resetLeaderboardListener);
 
-            displayLeaderboard(); // Display the leaderboard when the page loads
+            // Display the leaderboard when the page loads
+            displayLeaderboard(); 
             updatePage();
         },
+
+        // Expose startGame and savePlayerName functions
         startGame: startGame,
-        savePlayerName: savePlayerName // Expose savePlayerName function
+        savePlayerName: savePlayerName 
     }
 }
